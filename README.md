@@ -73,7 +73,7 @@ git --version
 ### 3.2 拉代码
 
 ```bash
-git clone https://github.com/<owner>/motrixlab-cartpole-ppo.git
+git clone https://github.com/A1B2CD/motrixlab-cartpole-ppo.git
 cd motrixlab-cartpole-ppo
 ```
 
@@ -179,7 +179,7 @@ motrix_rl.registry:    @rlcfg("cartpole")   → CartPoleSkrlPpo / CartPoleRlsrlP
 ## 6. 复现命令一页纸
 
 ```bash
-git clone https://github.com/<owner>/motrixlab-cartpole-ppo.git
+git clone https://github.com/A1B2CD/motrixlab-cartpole-ppo.git
 cd motrixlab-cartpole-ppo
 bash scripts/01_bootstrap.sh
 
