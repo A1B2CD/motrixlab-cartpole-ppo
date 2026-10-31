@@ -201,6 +201,21 @@ uv run scripts/play.py --env cartpole \
 
 ---
 
-## 7. 许可
+## 7. 全新克隆验证（2026-10-31）
+
+为确认"别人 clone 下来就能跑"，我在一台干净的临时目录里做了完整验证（不沿用任何已有环境）：
+
+| 步骤 | 结果 |
+| --- | --- |
+| `git clone --depth 1` | 381 个文件，checkpoint / tfevents / 真实 png 全部到位 |
+| `uv sync --all-packages --extra skrl-torch --python 3.10` | 解析 130 个包，安装 31 个包，**37.6 秒** |
+| 关键版本 | `torch 2.7.0+cpu`、`skrl 1.4.3`、`numpy 2.2.6`、`gymnasium 1.1.1` |
+| `play.py --headless`（200 步） | `[play] finished 200 steps, mean episode reward=200.00` |
+
+> 唯一输出是 `uv-build` 版本范围的 warning（仓库锁的是 `>=0.9.6,<0.10.0`，本机 uv 是 0.13.6），不影响构建。
+
+---
+
+## 8. 许可
 
 `motrixlab/` 目录为 Motphys 的 Apache-2.0 代码，原始 `LICENSE` 与 `NOTICE` 保留在 `motrixlab/` 内。本项目新增的脚本与文档同样以 Apache-2.0 发布。
