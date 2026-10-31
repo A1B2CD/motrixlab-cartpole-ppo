@@ -14,7 +14,8 @@
 .
 ├── README.md                     # 本文件
 ├── docs/
-│   └── 第7讲实操教程与指南.md      # 完整教程：下载、安装、训练、TensorBoard、推理、硬件/架构分析
+│   ├── 第7讲实操教程与指南.md      # 完整教程：下载、安装、训练、TensorBoard、推理、硬件/架构分析
+│   └── 巧工云自助运行指南.md       # 从空机器到证据推回 GitHub 的完整操作 + 报错对照表
 ├── scripts/                      # 云端一键脚本（按编号顺序执行）
 │   ├── lib.sh                    # 公共变量与函数
 │   ├── 00_check_server.sh        # 采集服务器硬件/软件配置
@@ -27,8 +28,11 @@
 │   ├── 06_play_xvfb.sh           # 推理演示（xvfb 虚拟显示 + 截图，尽力而为）
 │   ├── 07_collect_evidence.sh    # 汇总目录树 / 校验和 / 清单
 │   ├── 08_push_evidence.sh       # 提交并推回 GitHub
-│   └── run_all.sh                # 一键跑完 00 → 07（截图需人工确认）
+│   ├── 09_compare.sh             # 本地 vs 云端对比（调用 compare_runs.py）
+│   ├── compare_runs.py           # 对比表生成器（只读证据文件）
+│   └── run_all.sh                # 一键跑完 00 → 07 + 对比（截图需人工确认）
 ├── evidence/
+│   ├── comparison.md             # 本地 Windows vs 巧工云 对照表（云端列当前为「待生成」）
 │   ├── cloud/                    # 云端生成的证据（服务器跑完自动写入）
 │   └── local-windows/            # 本地 Windows 机器的对照运行证据
 └── motrixlab/                    # vendored MotrixLab v0.3.0（含本项目的修改）
@@ -201,7 +205,44 @@ uv run scripts/play.py --env cartpole \
 
 ---
 
-## 7. 全新克隆验证（2026-10-31）
+## 7. 本地 vs 云端对比
+
+同一套超参在两边各跑一次，差异才有意义。对比表由脚本从**证据文件**里读出来生成，不靠手抄：
+
+```bash
+bash scripts/09_compare.sh          # 或 uv run python scripts/compare_runs.py
+```
+
+产出 `evidence/comparison.md`，当前内容（云端尚未运行）：
+
+| 指标 | 本地 Windows | 巧工云服务器 |
+| --- | --- | --- |
+| CPU | i5-8300H (4C/8T) | 待生成 |
+| GPU | GTX 1050 Ti 4GB / 驱动 528.79 | 待生成 |
+| PyTorch | 2.7.0+cpu | 待生成 |
+| checkpoint 数 | 11 | 待生成 |
+| episode 数 | 83 | 待生成 |
+| 平均回报 首 → 末 | 32.49 → **1000.00** | 待生成 |
+| value loss 首 → 末 | 3.487 → **2.016e-06** | 待生成 |
+| 训练耗时 | **82.4 s** | 待生成 |
+| 推理（headless） | 1000 步 / **1000.00** | 待生成 |
+
+脚本会读这些文件（两边文件名不同也能识别）：
+
+| 数据 | 本地 | 云端 |
+| --- | --- | --- |
+| 硬件/版本 | `00_env_report.json` | `00_server_report.json` |
+| 曲线数据 | `scalars.csv` | `04_scalars.csv` |
+| 推理结果 | `05_play_headless.log` / `03_play_demo.txt` | `05_play_headless.log` |
+| 目录树 | `01_runs_tree.txt` | `07_runs_tree.txt` |
+
+任意一侧缺文件不会报错，缺失项显示「待生成」。云端跑完 `run_all.sh` 会自动重新生成。
+
+> 预期结论：两边末次回报都会是 1000（CartPole 上限），**耗时差异主要来自 CPU 单核性能而不是 GPU**。原因见第 5 节架构分析——瓶颈在 NumPy 物理步进，不在神经网络。
+
+---
+
+## 8. 全新克隆验证（2026-10-31）
 
 为确认"别人 clone 下来就能跑"，我在一台干净的临时目录里做了完整验证（不沿用任何已有环境）：
 
@@ -216,6 +257,6 @@ uv run scripts/play.py --env cartpole \
 
 ---
 
-## 8. 许可
+## 9. 许可
 
 `motrixlab/` 目录为 Motphys 的 Apache-2.0 代码，原始 `LICENSE` 与 `NOTICE` 保留在 `motrixlab/` 内。本项目新增的脚本与文档同样以 Apache-2.0 发布。

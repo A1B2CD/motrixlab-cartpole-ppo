@@ -55,6 +55,12 @@ fi
 STEP "07 汇总证据"
 bash "$REPO_ROOT/scripts/07_collect_evidence.sh"
 
+STEP "对比本地与云端"
+( cd "$ML_DIR" && uv run --no-sync python "$REPO_ROOT/scripts/compare_runs.py" \
+    --local "$REPO_ROOT/evidence/local-windows" \
+    --cloud "$EVID" \
+    --out "$REPO_ROOT/evidence" ) || warn "对比脚本失败，不影响证据"
+
 STEP "完成"
 log "下一步：bash scripts/08_push_evidence.sh"
 ls -lh "$EVID" | sed 's/^/  /'
