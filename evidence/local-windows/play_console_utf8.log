@@ -1,0 +1,32 @@
+uv.exe : Motphys profiler initialized: disabled
+所在位置 行:1 字符: 54
++ ... TEPS="180"; & "C:\Users\12037\AppData\Roaming\Python\Python314\Script ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Motphys profiler initialized: disabled:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+I1031 18:25:40.828356 24508 play.py:143] DeviceSupports(torch=True, torch_gpu=False, jax=False, jax_gpu=False)
+I1031 18:25:40.828356 24508 play.py:175] Using specified RL framework: skrl
+I1031 18:25:40.828356 24508 play.py:176] Using specified policy: runs/cartpole/26-10-31_18-14-47-731131_PPO/checkpoints
+/best_agent.pt
+[33;20m[skrl:WARNING] Using `from skrl.envs.torch import ...` is deprecated and will be removed in future versions.[0
+m
+W1031 18:25:41.013989 24508 torch.py:5] Using `from skrl.envs.torch import ...` is deprecated and will be removed in fu
+ture versions.
+[33;20m[skrl:WARNING]  - Import loaders using `from skrl.envs.loaders.torch import ...`[0m
+W1031 18:25:41.014991 24508 torch.py:6]  - Import loaders using `from skrl.envs.loaders.torch import ...`
+[33;20m[skrl:WARNING]  - Import wrappers using `from skrl.envs.wrappers.torch import ...`[0m
+W1031 18:25:41.014991 24508 torch.py:7]  - Import wrappers using `from skrl.envs.wrappers.torch import ...`
+[38;20m[skrl:INFO] Seed: 42[0m
+I1031 18:25:41.035995 24508 __init__.py:82] Seed: 42
+[2m2026-10-31T10:25:43.319190Z[0m [33m WARN[0m [2mbevy_asset::server::loaders[0m[2m:[0m Duplicate AssetLoader r
+egistered for Asset type `bevy_image::image::Image` with extensions `["png", "jpg", "jpeg"]`. Loader must be specified 
+in a .meta file in order to load assets of this type with these extensions.
+[2m2026-10-31T10:25:43.448297Z[0m [31mERROR[0m [2mbevy_asset::server[0m[2m:[0m Failed to load asset 'D:\robot\r
+l_sim\MotrixLab-0.3.0\motrix_envs\src\motrix_envs\common\motphys-ground.png' with asset loader 'bevy_common_toolkit::io
+::texture::MipTextureLoader': Failed to load image D:\robot\rl_sim\MotrixLab-0.3.0\motrix_envs\src\motrix_envs\common\m
+otphys-ground.png: failed to load an image: The image format could not be determined
+
+[play] Loaded policy: runs/cartpole/26-10-31_18-14-47-731131_PPO/checkpoints/best_agent.pt
+[play] env=cartpole sim_backend=None num_envs=16
+[play] finished 180 steps, mean episode reward=180.00

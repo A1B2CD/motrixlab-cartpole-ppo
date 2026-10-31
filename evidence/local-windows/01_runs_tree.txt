@@ -1,0 +1,21 @@
+D:\robot\rl_sim\MotrixLab-0.3.0> uv run scripts/train.py --env cartpole --num-envs 64
+
+Training finished: 5000/5000 timesteps (100%), 83 episodes completed
+
+D:\robot\rl_sim\MotrixLab-0.3.0> tree /F runs\cartpole
+
+cartpole/
+    26-10-31_18-14-47-731131_PPO/
+        events.out.tfevents.1793441721.DESKTOP-KDF3DEV.19068.0      78.7 KB    2026-10-31 18:16
+        checkpoints/
+            agent_1000.pt      28.6 KB    2026-10-31 18:15
+            agent_1500.pt      28.6 KB    2026-10-31 18:15
+            agent_2000.pt      28.6 KB    2026-10-31 18:15
+            agent_2500.pt      28.6 KB    2026-10-31 18:16
+            agent_3000.pt      28.6 KB    2026-10-31 18:16
+            agent_3500.pt      28.6 KB    2026-10-31 18:16
+            agent_4000.pt      28.6 KB    2026-10-31 18:16
+            agent_4500.pt      28.6 KB    2026-10-31 18:16
+            agent_500.pt      28.6 KB    2026-10-31 18:15
+            agent_5000.pt      28.6 KB    2026-10-31 18:16
+            best_agent.pt      35.4 KB    2026-10-31 18:15

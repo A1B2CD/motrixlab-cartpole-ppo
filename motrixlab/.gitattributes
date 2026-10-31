@@ -1,0 +1,25 @@
+# Vendored MotrixLab v0.3.0 —— 本项目已移除上游的 Git LFS 规则。
+#
+# 上游用 LFS 跟踪 *.stl / *.obj / *.png / *.mp4 等资产，但：
+#   * 本仓库只需要 CartPole（2 个刚体，不依赖任何网格/贴图/视频资产）；
+#   * GitHub 上 v0.3.0 的 zip 包里这些文件只是 LFS 指针，真实内容没有随包下载，
+#     直接继承 LFS 规则会导致 `git push` 因 missing objects 被拒。
+#
+# 因此这里只保留换行符规范。上游 zip 里所有 LFS 指针文件已从本仓库删除
+# （GitHub 的 pre-receive 钩子会拒绝仍含指针的推送），
+# CartPole 唯一需要的 motphys-ground.png 已替换为真实文件（56655 字节）。
+#
+# 影响：CartPole 训练/推理完全正常；其他环境（anymal_c / franka / shadow_hand 等）
+# 缺少网格与贴图，无法运行。需要那些环境时请从上游按 LFS 方式重新拉取。
+*           text=auto
+*.sh        text eol=lf
+*.py        text eol=lf
+*.md        text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+*.toml      text eol=lf
+*.pt        binary
+*.png       binary
+*.jpg       binary
+*.mp4       binary
+*.zip       binary
