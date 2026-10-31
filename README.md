@@ -26,7 +26,8 @@
 │   ├── 05_play_headless.sh       # 推理演示（headless，100% 可复现）
 │   ├── 06_play_xvfb.sh           # 推理演示（xvfb 虚拟显示 + 截图，尽力而为）
 │   ├── 07_collect_evidence.sh    # 汇总目录树 / 校验和 / 清单
-│   └── 08_push_evidence.sh       # 提交并推回 GitHub
+│   ├── 08_push_evidence.sh       # 提交并推回 GitHub
+│   └── run_all.sh                # 一键跑完 00 → 07（截图需人工确认）
 ├── evidence/
 │   ├── cloud/                    # 云端生成的证据（服务器跑完自动写入）
 │   └── local-windows/            # 本地 Windows 机器的对照运行证据
@@ -78,6 +79,14 @@ cd motrixlab-cartpole-ppo
 ```
 
 ### 3.3 按顺序执行
+
+一键跑完（推荐）：
+
+```bash
+bash scripts/run_all.sh
+```
+
+或逐条执行：
 
 ```bash
 bash scripts/00_check_server.sh      # 记录服务器配置 → evidence/cloud/00_server_report.*
