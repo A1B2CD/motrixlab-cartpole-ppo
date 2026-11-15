@@ -19,6 +19,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 ENV="${ENV:?用法：ENV=pendulum TAG=A bash scripts/20_train_env.sh}"
 TAG="${TAG:-$(date +%H%M%S)}"
 NUM_ENVS="${NUM_ENVS:-}"
+TIMESTEPS="${TIMESTEPS:-}"
 SEED="${SEED:-}"
 EXTRA="${EXTRA:-}"
 
@@ -32,6 +33,7 @@ cd "$ML_DIR"
 
 CMD=(uv run scripts/train.py --env "$ENV")
 if [[ -n "$NUM_ENVS" ]]; then CMD+=(--num-envs "$NUM_ENVS"); fi
+if [[ -n "$TIMESTEPS" ]]; then CMD+=(--timesteps "$TIMESTEPS"); fi
 if [[ -n "$SEED" ]]; then CMD+=(--seed "$SEED"); fi
 if [[ -n "$EXTRA" ]]; then
     # shellcheck disable=SC2206

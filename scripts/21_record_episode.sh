@@ -92,13 +92,15 @@ fi
 sleep 0.5
 
 # 3) 开始抓屏；回合结束 play.py 自己退出，我们再收尾
-DUR_MAX=$(( STEPS / 60 + 20 ))
+# -t 只是兜底：正常情况下 play.py 退出后我们主动 kill。软件渲染时 400 步可能要跑 40 s+，
+# 这里按最低 5 fps 估，避免把回合尾巴切掉。
+DUR_MAX=$(( STEPS / 5 + 60 ))
 ffmpeg -y -loglevel warning -f x11grab -framerate "$RATE" -i "$DISPLAY_ID" \
     -t "$DUR_MAX" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" \
     -c:v libx264 -pix_fmt yuv420p -movflags +faststart "$OUT" > "$FFLOG" 2>&1 &
 FFPID=$!
 
-wait "$PLAY_PID" || warn "play.py 返回非 0，检查 $LOG.play"
+wait "$PLAY_PID" || warn "play.py 返回非 0（多半是关窗时 Bevy 崩溃，不影响证据），检查 $LOG.play"
 sleep 1
 kill -INT "$FFPID" 2>/dev/null || true
 wait "$FFPID" 2>/dev/null || true
@@ -109,13 +111,20 @@ trap - EXIT
 [[ -s "$OUT" ]] || die "没生成视频，看 $FFLOG"
 [[ -s "$CSV_OUT" ]] || die "没生成逐帧 CSV，看 $LOG.play"
 
+DUR="$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$OUT" 2>/dev/null || echo '?')"
+
 {
     echo
     echo "================================================================"
-    echo "视频     : ${OUT#$REPO_ROOT/}   ($(du -h "$OUT" | cut -f1))"
+    echo "视频     : ${OUT#$REPO_ROOT/}   ($(du -h "$OUT" | cut -f1), 时长 ${DUR}s)"
     echo "逐帧 CSV : ${CSV_OUT#$REPO_ROOT/}   ($(wc -l < "$CSV_OUT") 行)"
     echo "ffmpeg   : ${FFLOG#$REPO_ROOT/}"
     echo "================================================================"
 } | tee -a "$LOG"
+
+# 时长接近兜底值 = 视频被 -t 截断，回合尾巴没录到
+if [[ "$DUR" != "?" ]] && awk "BEGIN{exit !($DUR >= $DUR_MAX - 2)}"; then
+    warn "视频时长 ${DUR}s 已达到兜底上限 ${DUR_MAX}s，可能没录完整回合；用 STEPS 更大的值或提高 RATE 重录"
+fi
 
 log "角度核算：python3 scripts/23_analyze_episode.py --env $ENV --csv ${CSV_OUT#$REPO_ROOT/}"
