@@ -68,7 +68,7 @@ SUMMARY="$W4/25_training_summary.md"
     for d in "$ML_DIR"/runs/week4/*/; do
         [[ -d "$d" ]] || continue
         tag="$(basename "$d")"
-        best="$d/checkpoints/best_agent.pt"
+        best="${d%/}/checkpoints/best_agent.pt"
         [[ -f "$best" ]] || continue
         ev="$(find "$d" -maxdepth 1 -name 'events.out.tfevents.*' -print -quit)"
         printf '| `%s` | `%s` | %s | `%s` |\n' \
