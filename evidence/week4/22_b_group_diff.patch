@@ -1,0 +1,13 @@
+diff --git a/motrixlab/motrix_envs/src/motrix_envs/basic/pendulum/pendulum_np.py b/motrixlab/motrix_envs/src/motrix_envs/basic/pendulum/pendulum_np.py
+index dce5c9f..48b35b1 100644
+--- a/motrixlab/motrix_envs/src/motrix_envs/basic/pendulum/pendulum_np.py
++++ b/motrixlab/motrix_envs/src/motrix_envs/basic/pendulum/pendulum_np.py
+@@ -85,7 +85,7 @@ class PendulumEnv(NpEnv):
+             value_at_margin=0.1,
+             sigmoid="gaussian",
+         )
+-        reward = (3.0 * upright + energy_reward - vel_penalty - 0.001 * ctrl**2 - 0.001 * ctrl_delta**2).astype(
++        reward = (3.0 * upright + 0.0 * energy_reward - vel_penalty - 0.001 * ctrl**2 - 0.001 * ctrl_delta**2).astype(
+             np.float32
+         )
+ 

@@ -1,0 +1,40 @@
+================================================================
+env       : pendulum
+tag       : demo
+seed      : 0
+steps     : 400   （一个完整回合）
+policy    : runs/week4/pendulum_demo/checkpoints/best_agent.pt
+display   : :20  @ 30fps
+date      : 2026-11-15T19:31:10+08:00
+command   : PLAY_MAX_STEPS=400 PLAY_LOG_CSV=<csv> uv run scripts/play.py --env pendulum --policy runs/week4/pendulum_demo/checkpoints/best_agent.pt --num-envs 1 --seed 0
+================================================================
+Motphys profiler initialized: disabled
+I1115 19:31:13.562384 140415109969984 play.py:150] DeviceSupports(torch=True, torch_gpu=True, jax=False, jax_gpu=False)
+I1115 19:31:13.563238 140415109969984 play.py:187] Using specified RL framework: skrl
+I1115 19:31:13.563350 140415109969984 play.py:188] Using specified policy: runs/week4/pendulum_demo/checkpoints/best_agent.pt
+[33;20m[skrl:WARNING] Using `from skrl.envs.torch import ...` is deprecated and will be removed in future versions.[0m
+W1115 19:31:13.818160 140415109969984 torch.py:5] Using `from skrl.envs.torch import ...` is deprecated and will be removed in future versions.
+[33;20m[skrl:WARNING]  - Import loaders using `from skrl.envs.loaders.torch import ...`[0m
+W1115 19:31:13.818442 140415109969984 torch.py:6]  - Import loaders using `from skrl.envs.loaders.torch import ...`
+[33;20m[skrl:WARNING]  - Import wrappers using `from skrl.envs.wrappers.torch import ...`[0m
+W1115 19:31:13.818514 140415109969984 torch.py:7]  - Import wrappers using `from skrl.envs.wrappers.torch import ...`
+[38;20m[skrl:INFO] Seed: 0[0m
+I1115 19:31:13.829389 140415109969984 __init__.py:82] Seed: 0
+ALSA lib dlmisc.c:287:(snd1_dlobj_cache_get) Cannot open shared library /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so ((null): /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so: cannot open shared object file: No such file or directory)
+ALSA lib dlmisc.c:287:(snd1_dlobj_cache_get) Cannot open shared library /usr/lib64/alsa-lib/libasound_module_pcm_jack.so ((null): /usr/lib64/alsa-lib/libasound_module_pcm_jack.so: cannot open shared object file: No such file or directory)
+ALSA lib dlmisc.c:287:(snd1_dlobj_cache_get) Cannot open shared library /usr/lib64/alsa-lib/libasound_module_pcm_jack.so ((null): /usr/lib64/alsa-lib/libasound_module_pcm_jack.so: cannot open shared object file: No such file or directory)
+ALSA lib dlmisc.c:287:(snd1_dlobj_cache_get) Cannot open shared library /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so ((null): /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so: cannot open shared object file: No such file or directory)
+ALSA lib dlmisc.c:287:(snd1_dlobj_cache_get) Cannot open shared library /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so ((null): /usr/lib64/alsa-lib/libasound_module_pcm_pipewire.so: cannot open shared object file: No such file or directory)
+[2m2026-11-15T11:31:15.265679Z[0m [33m WARN[0m [2mbevy_audio::audio_output[0m[2m:[0m No audio device found.
+[2m2026-11-15T11:31:15.307300Z[0m [33m WARN[0m [2mbevy_asset::server::loaders[0m[2m:[0m Duplicate AssetLoader registered for Asset type `bevy_image::image::Image` with extensions `["png", "jpg", "jpeg"]`. Loader must be specified in a .meta file in order to load assets of this type with these extensions.
+[2m2026-11-15T11:31:15.371822Z[0m [33m WARN[0m [2mwinit::platform_impl::linux::x11::util::randr[0m[2m:[0m XRandR reported that the display's 0mm in size, which is certifiably insane
+[play] Loaded policy: runs/week4/pendulum_demo/checkpoints/best_agent.pt
+[play] env=pendulum sim_backend=None num_envs=1
+[play] finished 400 steps, mean episode reward=1239.17
+[play] per-step csv written to: /home/ubuntu/motrixlab-cartpole-ppo/evidence/week4/csv/pendulum_demo_seed0.csv
+
+================================================================
+视频     : evidence/week4/video/pendulum_demo_seed0.mp4   (256K)
+逐帧 CSV : evidence/week4/csv/pendulum_demo_seed0.csv   (401 行)
+ffmpeg   : evidence/week4/21_ffmpeg_pendulum_demo_seed0.log
+================================================================

@@ -1,0 +1,71 @@
+{
+  "events": {
+    "acrobot_demo": "/home/ubuntu/motrixlab-cartpole-ppo/motrixlab/runs/week4/acrobot_demo/events.out.tfevents.1794745597.cdl8js5vb8-767c7cf587-psjqq.21350.0",
+    "pendulum_A": "/home/ubuntu/motrixlab-cartpole-ppo/motrixlab/runs/week4/pendulum_A/events.out.tfevents.1794744003.cdl8js5vb8-767c7cf587-psjqq.14123.0",
+    "pendulum_B": "/home/ubuntu/motrixlab-cartpole-ppo/motrixlab/runs/week4/pendulum_B/events.out.tfevents.1794744116.cdl8js5vb8-767c7cf587-psjqq.15220.0",
+    "pendulum_demo": "/home/ubuntu/motrixlab-cartpole-ppo/motrixlab/runs/week4/pendulum_demo/events.out.tfevents.1794742036.cdl8js5vb8-767c7cf587-psjqq.5427.0"
+  },
+  "runs": {
+    "acrobot_demo": [
+      "Episode / Total timesteps (max)",
+      "Episode / Total timesteps (mean)",
+      "Episode / Total timesteps (min)",
+      "Learning / Learning rate",
+      "Loss / Entropy loss",
+      "Loss / Policy loss",
+      "Loss / Value loss",
+      "Policy / Standard deviation",
+      "Reward / Instantaneous reward (max)",
+      "Reward / Instantaneous reward (mean)",
+      "Reward / Instantaneous reward (min)",
+      "Reward / Total reward (max)",
+      "Reward / Total reward (mean)",
+      "Reward / Total reward (min)"
+    ],
+    "pendulum_A": [
+      "Episode / Total timesteps (max)",
+      "Episode / Total timesteps (mean)",
+      "Episode / Total timesteps (min)",
+      "Learning / Learning rate",
+      "Loss / Policy loss",
+      "Loss / Value loss",
+      "Policy / Standard deviation",
+      "Reward / Instantaneous reward (max)",
+      "Reward / Instantaneous reward (mean)",
+      "Reward / Instantaneous reward (min)",
+      "Reward / Total reward (max)",
+      "Reward / Total reward (mean)",
+      "Reward / Total reward (min)"
+    ],
+    "pendulum_B": [
+      "Episode / Total timesteps (max)",
+      "Episode / Total timesteps (mean)",
+      "Episode / Total timesteps (min)",
+      "Learning / Learning rate",
+      "Loss / Policy loss",
+      "Loss / Value loss",
+      "Policy / Standard deviation",
+      "Reward / Instantaneous reward (max)",
+      "Reward / Instantaneous reward (mean)",
+      "Reward / Instantaneous reward (min)",
+      "Reward / Total reward (max)",
+      "Reward / Total reward (mean)",
+      "Reward / Total reward (min)"
+    ],
+    "pendulum_demo": [
+      "Episode / Total timesteps (max)",
+      "Episode / Total timesteps (mean)",
+      "Episode / Total timesteps (min)",
+      "Learning / Learning rate",
+      "Loss / Policy loss",
+      "Loss / Value loss",
+      "Policy / Standard deviation",
+      "Reward / Instantaneous reward (max)",
+      "Reward / Instantaneous reward (mean)",
+      "Reward / Instantaneous reward (min)",
+      "Reward / Total reward (max)",
+      "Reward / Total reward (mean)",
+      "Reward / Total reward (min)"
+    ]
+  }
+}
