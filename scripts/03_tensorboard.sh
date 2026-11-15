@@ -12,6 +12,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 HOST="${HOST:-127.0.0.1}"
 PORT="${PORT:-6006}"
+LOGDIR="${LOGDIR:-runs/cartpole}"
 LOG="$EVID/03_tensorboard.log"
 PIDFILE="$EVID/03_tensorboard.pid"
 
@@ -23,17 +24,17 @@ if [[ -f "$PIDFILE" ]] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
     sleep 1
 fi
 
-log "启动：uv run tensorboard --logdir runs/cartpole --host $HOST --port $PORT"
+log "启动：uv run tensorboard --logdir $LOGDIR --host $HOST --port $PORT"
 {
     echo "================================================================"
     echo "host      : $(hostname)"
     echo "date      : $(date -Is)"
-    echo "command   : uv run tensorboard --logdir runs/cartpole --host $HOST --port $PORT"
-    echo "logdir    : $ML_DIR/runs/cartpole"
+    echo "command   : uv run tensorboard --logdir $LOGDIR --host $HOST --port $PORT"
+    echo "logdir    : $ML_DIR/$LOGDIR"
     echo "================================================================"
 } > "$LOG"
 
-nohup uv run tensorboard --logdir runs/cartpole --host "$HOST" --port "$PORT" >> "$LOG" 2>&1 &
+nohup uv run tensorboard --logdir "$LOGDIR" --host "$HOST" --port "$PORT" >> "$LOG" 2>&1 &
 echo $! > "$PIDFILE"
 
 # 等待端口就绪
