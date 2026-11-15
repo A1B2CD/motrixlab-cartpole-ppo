@@ -234,26 +234,51 @@ class Trainer:
         import os
 
         max_steps = int(os.environ.get("PLAY_MAX_STEPS", "0"))
+        # Optional per-step CSV log (PLAY_LOG_CSV=/path/to/file.csv).
+        # Row k holds the observation fed to the policy at step k, the reward it
+        # earned, and whether that step ended the episode. It lets us compute the
+        # pole angle offline instead of eyeballing the recorded video.
+        csv_path = os.environ.get("PLAY_LOG_CSV", "")
+        csv_fp = open(csv_path, "w", encoding="utf-8") if csv_path else None
         step = 0
         total_reward = 0.0
         with torch.no_grad():
             obs, _ = env.reset()
+            if csv_fp:
+                obs_dim = int(obs.shape[-1])
+                csv_fp.write("step," + ",".join(f"obs{i}" for i in range(obs_dim)) + ",reward,done\n")
+                csv_fp.flush()
             # Throttle to 60 fps only when a render window is actually shown.
             fps = 60 if self._enable_render else 0
             while True:
                 t = time.time()
                 outputs = agent.act(obs, timestep=0, timesteps=0)
                 actions = outputs[-1].get("mean_actions", outputs[0])
-                obs, rewards, _, _, _ = env.step(actions)
+                current_obs = obs
+                obs, rewards, terminated, truncated, _ = env.step(actions)
                 env.render()
                 step += 1
                 total_reward += float(torch.as_tensor(rewards).mean().item())
+                if csv_fp:
+                    done = bool(torch.as_tensor(terminated).reshape(-1)[0].item()) or bool(
+                        torch.as_tensor(truncated).reshape(-1)[0].item()
+                    )
+                    row = current_obs[0].detach().cpu().numpy()
+                    csv_fp.write(
+                        f"{step},"
+                        + ",".join(f"{float(v):.6f}" for v in row)
+                        + f",{float(torch.as_tensor(rewards).mean().item()):.6f},{int(done)}\n"
+                    )
+                    csv_fp.flush()
                 delta_time = time.time() - t
                 if fps and delta_time < 1.0 / fps:
                     time.sleep(1.0 / fps - delta_time)
                 if max_steps and step >= max_steps:
                     print(f"[play] finished {step} steps, mean episode reward={total_reward:.2f}", flush=True)
                     break
+        if csv_fp:
+            csv_fp.close()
+            print(f"[play] per-step csv written to: {csv_path}", flush=True)
 
     def _make_model(self, env: Wrapper, rlcfg: SkrlCfg) -> dict[str, Model]:
         _activation_fn = {
