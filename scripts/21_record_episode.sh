@@ -100,10 +100,20 @@ ffmpeg -y -loglevel warning -f x11grab -framerate "$RATE" -i "$DISPLAY_ID" \
     -c:v libx264 -pix_fmt yuv420p -movflags +faststart "$OUT" > "$FFLOG" 2>&1 &
 FFPID=$!
 
-wait "$PLAY_PID" || warn "play.py 返回非 0（多半是关窗时 Bevy 崩溃，不影响证据），检查 $LOG.play"
-sleep 1
+# 4) 收尾：play.py 打印 "[play] finished" 时窗口还在；等到进程真正退出时 Bevy 窗口
+#    已经销毁，再录就是桌面了（旧版这里还多 sleep 1，视频尾部 2~4 s 都是桌面）。
+#    所以一看到 finished 就停录，让最后一帧就是回合最后一帧。
+FINISHED=0
+for _ in $(seq 1 1200); do
+    if grep -q "\[play\] finished" "$LOG.play" 2>/dev/null; then FINISHED=1; break; fi
+    if ! kill -0 "$PLAY_PID" 2>/dev/null; then break; fi
+    sleep 0.05
+done
+[[ "$FINISHED" == "1" ]] || warn "没等到 [play] finished（可能提前退出），按进程退出收尾"
+
 kill -INT "$FFPID" 2>/dev/null || true
 wait "$FFPID" 2>/dev/null || true
+wait "$PLAY_PID" || warn "play.py 返回非 0（多半是关窗时 Bevy 崩溃，不影响证据），检查 $LOG.play"
 
 cat "$LOG.play" >> "$LOG"
 trap - EXIT
